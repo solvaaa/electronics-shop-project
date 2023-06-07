@@ -50,7 +50,7 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls):
-    '''создаёт новые экземпляры класса из csv файла'''
+        '''создаёт новые экземпляры класса из csv файла'''
         with open(PATH, 'r', newline='', encoding='windows-1251') as csvfile:
             read_file = csv.DictReader(csvfile)
             for items in read_file:
