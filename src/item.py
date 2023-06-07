@@ -1,3 +1,6 @@
+import csv
+
+PATH = '../src/items.csv'
 class Item:
     """
     Класс для представления товара в магазине.
@@ -17,7 +20,6 @@ class Item:
         self.__name = name
         self.price = price
         self.quantity = quantity
-        self.all.append(self)
 
     def calculate_total_price(self) -> float:
         """
@@ -47,12 +49,19 @@ class Item:
 
 
     @classmethod
-    def instantiate_from_csv(cls, inst_from_csv):
-        cls.inst_from_csv = 'src/items.csv'
+    def instantiate_from_csv(cls):
+        with open(PATH, 'r', newline='', encoding='windows-1251') as csvfile:
+            read_file = csv.DictReader(csvfile)
+            for items in read_file:
+                name = items['name']
+                price = cls.string_to_number(items['price'])
+                quantity = float((items['quantity']))
+                cls.all.append(cls(name, price, quantity))
         return None
 
-    def test_name_setter(self):
-        assert len(self.name) <= 10
+    @staticmethod
+    def string_to_number(number_string):
+        return int(float(number_string))
 
 
 
