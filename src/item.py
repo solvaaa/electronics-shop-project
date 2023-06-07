@@ -14,7 +14,7 @@ class Item:
         :param price: Цена за единицу товара.
         :param quantity: Количество товара в магазине.
         """
-        self.name = name
+        self.__name = name
         self.price = price
         self.quantity = quantity
         self.all.append(self)
@@ -34,4 +34,25 @@ class Item:
         """
         discount = self.price * self.pay_rate
         self.price = discount
+
+    @property
+    def name(self):
+        return f'{self.__name}'
+
+    @name.setter
+    def name(self, name):
+        if len(name) <= 10:
+            self.__name = name
+
+
+
+    @classmethod
+    def instantiate_from_csv(cls, inst_from_csv):
+        cls.inst_from_csv = 'src/items.csv'
+        return None
+
+    def test_name_setter(self):
+        assert len(self.name) <= 10
+
+
 
