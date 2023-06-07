@@ -50,6 +50,7 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls):
+    '''создаёт новые экземпляры класса из csv файла'''
         with open(PATH, 'r', newline='', encoding='windows-1251') as csvfile:
             read_file = csv.DictReader(csvfile)
             for items in read_file:
@@ -61,6 +62,7 @@ class Item:
 
     @staticmethod
     def string_to_number(number_string):
+        '''возвращает int число из числа-строки'''
         return int(float(number_string))
 
 
