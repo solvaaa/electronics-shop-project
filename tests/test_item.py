@@ -43,3 +43,14 @@ def test_item_instantiate_from_csv():
     assert item1.name == 'Смартфон'
     Item.all.clear()
 
+
+def test_item_repr():
+    bread = one_item()
+    assert repr(bread) == "Item('Булка', 40, 7)"
+
+
+def test_item_str():
+    bread = one_item()
+    assert str(bread) == 'Булка'
+
+
