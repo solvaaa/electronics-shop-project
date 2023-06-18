@@ -49,3 +49,14 @@ def test_item_str(one_item):
     assert str(one_item) == 'Булка'
 
 
+@pytest.fixture
+def second_item():
+    return Item('Пирожок', 100, 6)
+
+
+def test_item_add(one_item, second_item):
+    assert one_item + second_item == 13
+    with pytest.raises(TypeError):
+        one_item + 8
+
+
