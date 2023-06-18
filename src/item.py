@@ -46,7 +46,7 @@ class Item:
         if len(name) <= 10:
             self.__name = name
         else:
-            print("Exception: Длина наименования товара превышает 10 символов")
+            raise Exception("Длина наименования товара превышает 10 символов")
 
     @classmethod
     def instantiate_from_csv(cls):
@@ -74,6 +74,12 @@ class Item:
 
     def __str__(self):
         return f"{self.__name}"
+
+    def __add__(self, other):
+        if isinstance(other, Item):
+            return self.quantity + other.quantity
+        else:
+            raise TypeError('Невозможно сложить класс с объектом другого класса')
 
 
 
