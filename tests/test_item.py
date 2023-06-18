@@ -3,31 +3,28 @@ import pytest
 from src.item import Item
 
 
+@pytest.fixture
 def one_item():
     return Item('Булка', 40, 7)
 
 
-def test_item_init():
-    bread = one_item()
-    assert bread.name == 'Булка'
+def test_item_init(one_item):
+    assert one_item.name == 'Булка'
 
 
-def test_item_apply_discount():
-    bread = one_item()
-    bread.pay_rate = 0.5
-    bread.apply_discount()
-    assert bread.price == 20
+def test_item_apply_discount(one_item):
+    one_item.pay_rate = 0.5
+    one_item.apply_discount()
+    assert one_item.price == 20
 
 
-def test_item_calculate_total_price():
-    bread = one_item()
-    assert bread.calculate_total_price() == 280
+def test_item_calculate_total_price(one_item):
+    assert one_item.calculate_total_price() == 280
 
 
-def test_item_name():
-    bread = one_item()
-    bread.name = 'Хлеб'
-    assert bread.name == 'Хлеб'
+def test_item_name(one_item):
+    one_item.name = 'Хлеб'
+    assert one_item.name == 'Хлеб'
 
 
 def test_item_string_to_number():
@@ -44,13 +41,11 @@ def test_item_instantiate_from_csv():
     Item.all.clear()
 
 
-def test_item_repr():
-    bread = one_item()
-    assert repr(bread) == "Item('Булка', 40, 7)"
+def test_item_repr(one_item):
+    assert repr(one_item) == "Item('Булка', 40, 7)"
 
 
-def test_item_str():
-    bread = one_item()
-    assert str(bread) == 'Булка'
+def test_item_str(one_item):
+    assert str(one_item) == 'Булка'
 
 
