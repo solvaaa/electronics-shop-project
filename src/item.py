@@ -76,7 +76,10 @@ class Item:
         return f"{self.__name}"
 
     def __add__(self, other):
-        return self.quantity + other.quantity
+        if isinstance(other, Item):
+            return self.quantity + other.quantity
+        else:
+            raise TypeError('Невозможно сложить класс с объектом другого класса')
 
 
 
