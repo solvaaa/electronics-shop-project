@@ -17,4 +17,5 @@ class Phone(Item):
             self.__number_of_sim = number_of_sim
         else:
             raise ValueError('Количество физических SIM-карт должно быть целым числом больше нуля.')
-            #print("Exception: Длина наименования товара превышает 10 символов")
+
+
