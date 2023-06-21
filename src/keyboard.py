@@ -15,6 +15,9 @@ class Language:
             self.__language = "RU"
         elif self.language == "RU":
             self.__language = "EN"
+        return self
 
-class Keyboard(Item):
-    ...
+
+class Keyboard(Item, Language):
+    pass
+
