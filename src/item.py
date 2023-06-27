@@ -50,17 +50,26 @@ class Item:
             raise Exception("Длина наименования товара превышает 10 символов")
 
     @classmethod
-    def instantiate_from_csv(cls):
+    def instantiate_from_csv(cls, path=PATH):
         '''
         Создаёт новые экземпляры класса из csv файла
         '''
-        with open(PATH, 'r', newline='', encoding='windows-1251') as csvfile:
-            read_file = csv.DictReader(csvfile)
-            for items in read_file:
-                name = items['name']
-                price = cls.string_to_number(items['price'])
-                quantity = float((items['quantity']))
-                cls.all.append(cls(name, price, quantity))
+        try:
+            opened_file = open(path, 'r', newline='', encoding='windows-1251')
+        except FileNotFoundError as e:
+            raise FileNotFoundError('Отсутствует файл items.csv') from e
+        else:
+            with opened_file as csvfile:
+                try:
+                    read_file = csv.DictReader(csvfile)
+                    for items in read_file:
+                        name = items['name']
+                        price = cls.string_to_number(items['price'])
+                        quantity = float((items['quantity']))
+                        cls.all.append(cls(name, price, quantity))
+                except Exception as e:
+                    raise InstantiateCSVError from e
+
         return None
 
     @staticmethod
@@ -83,5 +92,12 @@ class Item:
             raise TypeError('Невозможно сложить класс с объектом другого класса')
 
 
+class InstantiateCSVError(Exception):
+    """
+    Класс исключения для метода
+    """
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else 'Файл items.csv поврежден'
 
-
+    def __str__(self):
+        return self.message
