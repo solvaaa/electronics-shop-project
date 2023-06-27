@@ -50,12 +50,12 @@ class Item:
             raise Exception("Длина наименования товара превышает 10 символов")
 
     @classmethod
-    def instantiate_from_csv(cls):
+    def instantiate_from_csv(cls, path=PATH):
         '''
         Создаёт новые экземпляры класса из csv файла
         '''
         try:
-            opened_file = open(PATH, 'r', newline='', encoding='windows-1251')
+            opened_file = open(path, 'r', newline='', encoding='windows-1251')
         except FileNotFoundError as e:
             raise FileNotFoundError('Отсутствует файл items.csv') from e
         else:
