@@ -1,6 +1,6 @@
 import csv
 
-PATH = '../src/items.csv'
+PATH = '../src/item.csv'
 class Item:
     """
     Класс для представления товара в магазине.
@@ -54,13 +54,18 @@ class Item:
         '''
         Создаёт новые экземпляры класса из csv файла
         '''
-        with open(PATH, 'r', newline='', encoding='windows-1251') as csvfile:
-            read_file = csv.DictReader(csvfile)
-            for items in read_file:
-                name = items['name']
-                price = cls.string_to_number(items['price'])
-                quantity = float((items['quantity']))
-                cls.all.append(cls(name, price, quantity))
+        try:
+            opened_file = open(PATH, 'r', newline='', encoding='windows-1251')
+        except FileNotFoundError as e:
+            raise FileNotFoundError('Отсутствует файл item.csv') from e
+        else:
+            with opened_file as csvfile:
+                read_file = csv.DictReader(csvfile)
+                for items in read_file:
+                    name = items['name']
+                    price = cls.string_to_number(items['price'])
+                    quantity = float((items['quantity']))
+                    cls.all.append(cls(name, price, quantity))
         return None
 
     @staticmethod
