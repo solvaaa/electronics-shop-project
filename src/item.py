@@ -1,6 +1,6 @@
 import csv
 
-PATH = '../src/item.csv'
+PATH = '../src/items.csv'
 class Item:
     """
     Класс для представления товара в магазине.
@@ -57,15 +57,19 @@ class Item:
         try:
             opened_file = open(PATH, 'r', newline='', encoding='windows-1251')
         except FileNotFoundError as e:
-            raise FileNotFoundError('Отсутствует файл item.csv') from e
+            raise FileNotFoundError('Отсутствует файл items.csv') from e
         else:
             with opened_file as csvfile:
-                read_file = csv.DictReader(csvfile)
-                for items in read_file:
-                    name = items['name']
-                    price = cls.string_to_number(items['price'])
-                    quantity = float((items['quantity']))
-                    cls.all.append(cls(name, price, quantity))
+                try:
+                    read_file = csv.DictReader(csvfile)
+                    for items in read_file:
+                        name = items['name']
+                        price = cls.string_to_number(items['price'])
+                        quantity = float((items['quantity']))
+                        cls.all.append(cls(name, price, quantity))
+                except Exception as e:
+                    raise InstantiateCSVError from e
+
         return None
 
     @staticmethod
@@ -88,5 +92,12 @@ class Item:
             raise TypeError('Невозможно сложить класс с объектом другого класса')
 
 
+class InstantiateCSVError(Exception):
+    """
+    Класс исключения для метода
+    """
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else 'Файл items.csv поврежден'
 
-
+    def __str__(self):
+        return self.message
